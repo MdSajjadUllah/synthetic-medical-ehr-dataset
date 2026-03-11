@@ -1,0 +1,52 @@
+{
+  "dataset_name": "Synthetic Privacy-Preserving Medical Dataset v5",
+  "records": 10000,
+  "features": [
+    "age_midpoint",
+    "systolic_bp",
+    "diastolic_bp",
+    "heart_rate",
+    "cholesterol_mg_dl",
+    "bmi",
+    "num_visits",
+    "adherence_pct",
+    "gender_enc",
+    "ethnicity_enc",
+    "region_enc",
+    "severity_enc",
+    "icd10_code_enc"
+  ],
+  "target": "adverse_outcome",
+  "splits": {
+    "train": "70%",
+    "val": "15%",
+    "test": "15%"
+  },
+  "privacy_techniques": [
+    "UUID patient IDs \u2014 no real names",
+    "Age buckets \u2014 no exact ages",
+    "Region labels \u2014 no city/postcode",
+    "Laplace differential privacy noise on vitals (epsilon=2)"
+  ],
+  "preprocessing": [
+    "5% missing values simulated then imputed (median)",
+    "StandardScaler on numerical features (fit on train only)",
+    "LabelEncoder on categorical features",
+    "SMOTE on training set only \u2014 no val/test leakage",
+    "outcome column excluded from features \u2014 no target leakage"
+  ],
+  "models_trained": [
+    "Random Forest",
+    "Gradient Boosting",
+    "XGBoost"
+  ],
+  "best_model": "XGBoost",
+  "best_val_roc_auc": 0.9665,
+  "best_rf_params": {
+    "n_estimators": 200,
+    "min_samples_split": 2,
+    "min_samples_leaf": 2,
+    "max_features": "log2",
+    "max_depth": null
+  }
+}
